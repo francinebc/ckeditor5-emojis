@@ -9,18 +9,15 @@ import CharacterInfoView from './ui/characterinfoview';
 import emojiIcon from '../theme/icons/face.svg';
 import '../theme/specialcharacters.css';
 import activities from '../data/activities.json';
-import flags from '../data/flags.json';
 import food from '../data/food.json';
 import nature from '../data/nature.json';
 import objects from '../data/objects.json';
 import people from '../data/people.json';
-import symbols from '../data/symbols.json';
 import travel from '../data/travel.json';
 
 const ALL_SPECIAL_CHARACTERS_GROUP = 'All';
 export default class Emojis extends Plugin {
-
-    /**
+	/**
 	 * @inheritDoc
 	 */
 	static get requires() {
@@ -34,7 +31,7 @@ export default class Emojis extends Plugin {
 		return 'Emojis';
 	}
 
-    /**
+	/**
 	 * @inheritDoc
 	 */
 	constructor( editor ) {
@@ -57,35 +54,35 @@ export default class Emojis extends Plugin {
 		this._groups = new Map();
 	}
 
-    /**
+	/**
 	 * @inheritDoc
 	 */
-    init() {
-        const editor = this.editor;
+	init() {
+		const editor = this.editor;
 		const t = editor.t;
 
 		const inputCommand = editor.commands.get( 'input' );
 
-        // Add the `emojis` dropdown button to feature components.
-        editor.ui.componentFactory.add( 'emojis', locale => {
-            const dropdownView = createDropdown( locale );
-            let dropdownPanelContent;
+		// Add the `emojis` dropdown button to feature components.
+		editor.ui.componentFactory.add( 'emojis', locale => {
+			const dropdownView = createDropdown( locale );
+			let dropdownPanelContent;
 
-            dropdownView.buttonView.set( {
+			dropdownView.buttonView.set( {
 				label: t( 'Emojis' ),
 				icon: emojiIcon,
 				tooltip: true
 			} );
 
-            dropdownView.bind( 'isEnabled' ).to( inputCommand );
+			dropdownView.bind( 'isEnabled' ).to( inputCommand );
 
-            // Insert an emoji when a tile is clicked.
+			// Insert an emoji when a tile is clicked.
 			dropdownView.on( 'execute', ( evt, data ) => {
 				editor.execute( 'input', { text: data.character } );
 				editor.editing.view.focus();
 			} );
 
-            dropdownView.on( 'change:isOpen', () => {
+			dropdownView.on( 'change:isOpen', () => {
 				if ( !dropdownPanelContent ) {
 					dropdownPanelContent = this._createDropdownPanelContent( locale, dropdownView );
 
@@ -101,23 +98,23 @@ export default class Emojis extends Plugin {
 			} );
 
 			return dropdownView;
-        } );
+		} );
 
-        try{
-            this.addItems('People', people);
-            this.addItems('Activities', activities);
-            this.addItems('Food', food);
-            this.addItems('Nature', nature);
-            this.addItems('Objects', objects);
-            this.addItems('Travel', travel);
-        } catch (error) {
-            throw new CKEditorError(
-				`emojis-json-parse: Ran into issues trying to parse json file of available emojis.`
+		try {
+			this.addItems( 'People', people );
+			this.addItems( 'Activities', activities );
+			this.addItems( 'Food', food );
+			this.addItems( 'Nature', nature );
+			this.addItems( 'Objects', objects );
+			this.addItems( 'Travel', travel );
+		} catch ( error ) {
+			throw new CKEditorError(
+				'emojis-json-parse: Ran into issues trying to parse json file of available emojis.'
 			);
-        }
-    }
+		}
+	}
 
-    /**
+	/**
 	 * Adds a collection of special characters to the specified group. The title of a special character must be unique.
 	 *
 	 * **Note:** The "All" category name is reserved by the plugin and cannot be used as a new name for a special
@@ -147,7 +144,7 @@ export default class Emojis extends Plugin {
 		}
 	}
 
-    /**
+	/**
 	 * Returns an iterator of special characters groups.
 	 *
 	 * @returns {Iterable.<String>}
@@ -156,7 +153,7 @@ export default class Emojis extends Plugin {
 		return this._groups.keys();
 	}
 
-    /**
+	/**
 	 * Returns a collection of special characters symbol names (titles).
 	 *
 	 * @param {String} groupName
@@ -170,7 +167,7 @@ export default class Emojis extends Plugin {
 		return this._groups.get( groupName );
 	}
 
-    /**
+	/**
 	 * Returns the symbol of a special character for the specified name. If the special character could not be found, `undefined`
 	 * is returned.
 	 *
@@ -181,7 +178,7 @@ export default class Emojis extends Plugin {
 		return this._characters.get( title );
 	}
 
-    /**
+	/**
 	 * Returns a group of special characters. If the group with the specified name does not exist, it will be created.
 	 *
 	 * @private
@@ -195,7 +192,7 @@ export default class Emojis extends Plugin {
 		return this._groups.get( groupName );
 	}
 
-    /**
+	/**
 	 * Updates the symbol grid depending on the currently selected character group.
 	 *
 	 * @private
@@ -215,7 +212,7 @@ export default class Emojis extends Plugin {
 		}
 	}
 
-    /**
+	/**
 	 * Initializes the dropdown, used for lazy loading.
 	 *
 	 * @private
