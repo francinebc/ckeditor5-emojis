@@ -19,7 +19,7 @@ More can easily be added or removed.
 You can update the icon by changing face.svg to be whatever emoji icon you prefer.
 
 ```js
-import Emojis from '@harrisonlucas/ckeditor5-emoji/src/emoji';
+import Emojis from '@harrisonlucas/ckeditor5-emojis/src/emojis';
 
 ClassicEditor
     .create( document.querySelector( '#editor' ), {
