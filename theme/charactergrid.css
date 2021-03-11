@@ -9,3 +9,8 @@
 		grid-template-columns: repeat( 10, 1fr );
 	}
 }
+
+.ck.ck-character-grid {
+	overflow: auto;
+	max-height: 300px;
+}
